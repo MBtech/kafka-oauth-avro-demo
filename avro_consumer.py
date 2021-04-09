@@ -5,8 +5,9 @@ import functools
 from keycloak import KeycloakOpenID
 import time
 from config import *
+import sys
 
-topic_name = "traffic-avro"
+topic_name = sys.argv[1]
 
 oidc_obj = KeycloakOpenID(server_url=keycloak_url,
                     client_id=client_id,
@@ -38,6 +39,7 @@ def _get_token(args, config):
 def consumer_config(args):
     logger = logging.getLogger(__name__)
     return {
+        'auto.offset.reset': 'earliest',
         'bootstrap.servers': brokers,
         'security.protocol': 'sasl_plaintext',
         'sasl.mechanisms': 'OAUTHBEARER',
@@ -47,7 +49,7 @@ def consumer_config(args):
         # 'sasl.oauthbearer.config': 'not-used',
         'oauth_cb': functools.partial(_get_token, args),
         'logger': logger,
-        'group.id': 'test1',
+        'group.id': 'test',
         'schema.registry.url': schema_registry_url
     }
 

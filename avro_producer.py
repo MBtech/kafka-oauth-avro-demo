@@ -6,8 +6,9 @@ import logging
 from keycloak import KeycloakOpenID
 import time 
 from config import * 
+import sys
 
-topic_name = "traffic-avro"
+topic_name = sys.argv[1]
 
 oidc_obj = KeycloakOpenID(server_url=keycloak_url,
                     client_id=client_id,
