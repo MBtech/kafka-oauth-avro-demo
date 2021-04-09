@@ -1,0 +1,4 @@
+avro-python3
+pandas
+python-keycloak
+confluent-kafka>=1.6.1
